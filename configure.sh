@@ -31,17 +31,17 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-### Install NodeJS
-# Install NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+# ### Install NodeJS
+# # Install NVM
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 
-# Load NVM (Will append to your ~/.bashrc after the above installation)
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# # Load NVM (Will append to your ~/.bashrc after the above installation)
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Install NodeJS v14.3.0
-nvm install v14.3.0
-nvm use -g v14.3.0
+# # Install NodeJS v14.3.0
+# nvm install v14.3.0
+# nvm use -g v14.3.0
 
 ### Install LLVM 10
 # Add LLVM GPG key
@@ -58,6 +58,7 @@ sudo apt install -y clang-10 clang-tools-10 clang-10-doc libclang-common-10-dev 
 sudo apt install -y lld-10 liblld-10-dev
 # libc++
 sudo apt install -y libc++-10-dev libc++abi-10-dev
+
 
 ### Install boost, and zlib
 sudo apt update
@@ -78,3 +79,28 @@ wget https://github.com/WebAssembly/binaryen/releases/download/version_93/binary
 tar zxvf binaryen-version_93-x86_64-linux.tar.gz
 cd ..
 export PATH=$(pwd)/thirdpartybin/binaryen-version_93:$PATH
+
+
+
+# install https://gist.github.com/kittywhiskers/a3395cb41206d8aa777ce0a8b722d37e
+
+# install emscripten
+sudo apt install emscripten
+
+#fix docker 
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# REBOOT/LOGOUT TO SEE THE DOCKER GROUP
+groups
+docker ps
+
+sudo apt-get install libicu-dev
+
+# issues with LLD & Clang: somehow fixed with removing latest "clang" package, and then reinstalling clang-11
+
+# install wasmer Feb 28, 2020
+# install https://github.com/wasmerio/wasmer/releases/tag/0.14.1 # does NOT work 0.14.1
+# curl https://get.wasmer.io -sSfL | sh -s "0.14.2" # works
+curl https://get.wasmer.io -sSfL | sh -s "0.15.0" # works
+# curl https://get.wasmer.io -sSfL | sh -s "0.16.2" # caused issues
+# install kernel-wasmer

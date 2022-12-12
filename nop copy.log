@@ -1,0 +1,7 @@
+0.011
+thread 'main' panicked at 'called `Option::unwrap()` on a `None` value', /rustc/19bd93467617a447c22ec32cc1cf14d40cb84ccf/src/libcore/macros/mod.rs:15:40
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+Error: Can't use the kernel loader: "Code(-1)"
+
+0.071

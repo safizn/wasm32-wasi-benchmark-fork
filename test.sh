@@ -29,8 +29,8 @@ function prepare() {
 
 function compile() {
     for ((i=0; i<"${#NAME[@]}"; ++i)); do
-        "$SSVMC" build/"$MODE"/"${NAME[i]}".wasm test/ssvm/"${NAME[i]}".so
-        "$LUCETC" build/"$MODE"/"${NAME[i]}".wasm --wasi_exe --opt-level speed --bindings "$LUCET_BINDINGS" -o test/lucet/"${NAME[i]}".so
+        # "$SSVMC" build/"$MODE"/"${NAME[i]}".wasm test/ssvm/"${NAME[i]}".so
+        # "$LUCETC" build/"$MODE"/"${NAME[i]}".wasm --wasi_exe --opt-level speed --bindings "$LUCET_BINDINGS" -o test/lucet/"${NAME[i]}".so
         "$WAVM" compile --format=precompiled-wasm build/"$MODE"/"${NAME[i]}".wasm test/wavm/"${NAME[i]}".wasm
     done
 }
@@ -73,7 +73,7 @@ function test_v8() {
 
 prepare
 compile
-test_ssvm
-test_lucet
+# test_ssvm
+# test_lucet
 test_wavm
-test_v8
+# test_v8

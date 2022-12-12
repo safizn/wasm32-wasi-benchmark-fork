@@ -76,24 +76,32 @@ function prepare_lucet() {
 }
 
 function prepare_wasmedge() {
-    if [ -e thirdparty/wasmedge/.git ]; then
-        pushd thirdparty/wasmedge
-        git fetch -a
-        git reset --hard origin/HEAD
-        git submodule update --init --recursive
-        make -C build
-        popd
-    else
-        git clone --depth 1 https://github.com/WasmEdge/WasmEdge.git thirdparty/wasmedge
+    sudo rm -r thirdparty/wasmedge || true;
+    
+    # if [ -e thirdparty/wasmedge/.git ]; then
+        # pushd thirdparty/wasmedge
+        # git fetch -a
+        # git reset --hard origin/HEAD
+        # git submodule update --init --recursive
+        # make -C build
+        # popd
+    # else
+        # May 24, 2021 
+        # https://github.com/WasmEdge/WasmEdge/releases/tag/0.8.2
+        git clone --depth 1 --branch 0.8.0 https://github.com/WasmEdge/WasmEdge.git thirdparty/wasmedge
+        # git clone --depth 1 https://github.com/WasmEdge/WasmEdge.git thirdparty/wasmedge
         pushd thirdparty/wasmedge
         git submodule update --init --recursive
         mkdir build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
+        echo "MARK 1"
         cd ..
+        echo "MARK 2"
         make -C build -j 8
+        echo "MARK 3"
         popd
-    fi
+    # fi
 }
 
 function prepare_wavm() {
@@ -164,10 +172,8 @@ check_git
 check_rustup
 check_wasmer
 
-prepare_lucet
-prepare_emcc
-prepare_wavm
-prepare_wasmedge
+# prepare_emcc
+# prepare_wavm
 
 apply_emcc
 invoke_cmake
